@@ -1,1 +1,1 @@
-# Repositorio Djnago de Alberto Martínez
+# Repositorio Django de Alberto Martínez
