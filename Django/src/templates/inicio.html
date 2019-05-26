@@ -1,4 +1,21 @@
-<!--<h1>hola mundo</h1>-->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Bienvenidos | {{ block.super }}{% endblock %}
+
+{% block jumbotron_content %}
+<div class='row'>
+	<div class='col-sm-6'>
+    <h1>Django de Alberto Martínez</h1>
+    <p class="lead">Trabajo de Django para LM. El objetivo es construir una página web simple a la par que elegante en muy poco tiempo.</p>
+    <a class="btn btn-lg btn-primary" href="/docs/4.3/components/navbar/" role="button">Únete &raquo;</a>
+</div>
+<div class='col-sm-6' style='background-color: black; height: 300px;'></div>
+</div>
+
+{% endblock %}
+
+
 {{ titulo }}<br/>
 
 {{ request.user }}
@@ -6,8 +23,32 @@
 <hr/>
 <br/>
 
-
-<form method="POST" action="">{% csrf_token %}
-{{ el_form.as_p }}
-<input type='submit' value='Registrame' />
-</form>
+{% block content %}
+<div class='row'>
+	<div class='col-sm-3 col-xs-12 pull-right'>
+		<p class='lead text-align-center'>
+			{{ titulo }}
+		</p>
+		<form method="POST" action="">{% csrf_token %}
+		{{ el_form|crispy }}
+		<input class='btn btn-primary' type='submit' value='Registrame' />
+		</form>
+	</div>
+<div class='col-sm-3'>
+<p class='lead text-align-center'>
+	Creado con Django &amp; Bootstrap
+</p>
+</div>
+<div class='col-sm-3'>
+<p class='lead text-align-center'>
+	Jaime ponme un 10 jaja
+</p>
+</div>
+<div class='col-sm-3'>
+<p class='lead text-align-center'>
+	Con código abierto fijate
+</p>
+</div>
+</div>
+<hr/>
+{% endblock %}
