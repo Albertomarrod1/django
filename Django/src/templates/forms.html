@@ -1,12 +1,19 @@
-<!--<h1>hola mundo</h1>-->
-{{ titulo }}<br>
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
-{{ request.user }}
-
+{{ titulo }}
 <hr>
-<br>
 
+{% block content %}
+<div class='row'>
+	<div class='col-sm-6'>
+{% if titulo %}
+<h1 class='text-align-center'>{{ titulo }}</h1>
+{% endif %}
 <form method="post" action="">{% csrf_token %}
-{{ form.as_p }}
-<input type='submit' value='Submit' />
+{{ form|crispy }}
+<input class='btn btn-primary' type='submit' value='Enviar' />
 </form>
+</div>
+</div>
+{% endblock %}
