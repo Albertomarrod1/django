@@ -3,9 +3,21 @@
 
 {% block head_title %}Bienvenidos | {{ block.super }}{% endblock %}
 
+<style>
+  {% block style %}
+  	.jumbotron {
+  		background-color: #7cadde !important;
+  	}
+  	.btn {
+  		color: white !important;
+  		background-color: blue !important;
+  	}
+  {% endblock %}
+</style>
+
 {% block jumbotron %}
   <div class="jumbotron">
-
+<main role="main" class="container">
 
 <div class='row'>
 	<div class='col-sm-6'>
@@ -13,9 +25,12 @@
     <p class="lead">Trabajo de Django para LM. El objetivo es construir una página web simple a la par que elegante en muy poco tiempo.</p>
     <a class="btn btn-lg btn-primary" href="/docs/4.3/components/navbar/" role="button">Únete &raquo;</a>
 </div>
-<div class='col-sm-6' style='background-color: black; height: 300px;'></div>
+<div class='col-sm-6'>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/t6DYlZzCYMg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 </div>
  </div>
+</main>
 
 {% endblock %}
 
