@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block head_title %}Bienvenidos | {{ block.super }}{% endblock %}
 
@@ -16,6 +17,15 @@
 </style>
 
 {% block jumbotron %}
+{% if request.user.is_staff %}
+<table class='table'>
+{% for instance in queryset %}
+<tr><td>{{ forloop.counter }}</td><td>{{ instance }}</td><td> {{ instance.nombre }}</td><td>Hace {{ instance.timestamp|timesince }}</td></tr><br>
+{% endfor %}
+</table>
+{% else %}
+
+
   <div class="jumbotron">
 <main role="main" class="container">
 
@@ -29,9 +39,9 @@
 	<iframe width="560" height="315" src="https://www.youtube.com/embed/t6DYlZzCYMg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
- </div>
+</div>
 </main>
-
+{% endif %}
 {% endblock %}
 
 
@@ -43,31 +53,52 @@
 <br/>
 
 {% block content %}
+{% if not request.user.is_staff %}
+
 <div class='row'>
 	<div class='col-sm-3 col-xs-12 pull-right'>
+		{% if not user.is_authenticated %}
+		<p class='lead text-align-center'>
+			Subscribirte
+		</p>
+
+		
+
+		<form method="POST" action="">{% csrf_token %}
+		{{ el_form|crispy }}
+		<input class='btn btn-primary' type='submit' value='Enviar' />
+		</form>
+		{% else %}
 		<p class='lead text-align-center'>
 			{{ titulo }}
 		</p>
-		<form method="POST" action="">{% csrf_token %}
-		{{ el_form|crispy }}
-		<input class='btn btn-primary' type='submit' value='Recibir' />
-		</form>
+		<spam class='fa fa-stack fa-5x'>
+		<i class='fa fa-hand-peace-o fa-stack-2x'></i></spam>
+		{% endif %}
+
 	</div>
 <div class='col-sm-3'>
 <p class='lead text-align-center'>
 	Creado con Django &amp; Bootstrap
+</p><img src="{% static 'img/hypesquad-black.png' %}" width="200" height="200" />
+</div>
+<div class='col-sm-3'>
+<p class='lead text-align-center'>
+	Jaime ponme un 10 jaja <br><br>
+	<spam class='fa fa-stack fa-5x'>
+		<i class='fa fa-circle-o-notch fa-stack-2x'></i>
+		<i class='fa fa-bullhorn fa-stack-1x'></i></spam>
 </p>
 </div>
 <div class='col-sm-3'>
 <p class='lead text-align-center'>
-	Jaime ponme un 10 jaja
-</p>
-</div>
-<div class='col-sm-3'>
-<p class='lead text-align-center'>
-	Con código abierto fijate
+	Con código abierto fijate<br><br>
+	<spam class='fa fa-stack fa-5x'>
+		<i class='fa fa-spinner fa-spin fa-stack-2x'></i>
+		<i class='fa fa-font-awesome fa-stack-1x'></i></spam>
 </p>
 </div>
 </div>
 <hr/>
+{% endif %}
 {% endblock %}

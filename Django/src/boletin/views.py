@@ -3,19 +3,19 @@ from .forms import ContactForm, RegModelForm
 from .models import Registrado
 from django.core.mail import send_mail
 from django.conf import settings
+
 # Create your views here.
 
 def inicio(request):
 	titulo= 'Bienvenidos'
 	if request.user.is_authenticated():
-		titulo = 'Bienvenido %s' %(request.user)
+		titulo = 'Bienvenido/a %s' %(request.user)
 	form = RegModelForm(request.POST or None)
 
 	context = {
 		'titulo': titulo,
 		'el_form': form,
 	}
-
 	if form.is_valid():
 		instance=form.save(commit=False)
 		nombre = form.data.get('nombre')
@@ -30,15 +30,19 @@ def inicio(request):
 			context = {
 				'titulo': 'Gracias %s!' %(email),
 			}
-		print (instance)
-		print(instance.timestamp)
+
 		# form_Data = form.data
 		# abc = form_Data.get('email')
 		# abc2= form_Data.get('nombre')
 		# obj = Registrado.objects.create(email=abc, nombre=abc2)
 
 
+	if request.user.is_authenticated and request.user.is_staff:
+		queryset=Registrado.objects.all().order_by('-timestamp')
 
+		context={
+			'queryset': queryset,
+		}
 	return render(request, 'inicio.html', context)
 
 def contact(request):
